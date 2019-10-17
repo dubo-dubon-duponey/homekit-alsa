@@ -4,6 +4,11 @@ Lets you control the volume of (alsa) sound cards with HomeKit.
 
 ## TL;DR
 
+You need golang1.13+ to build.
+
+You also need alsa-utils at runtime.
+
+
 ```
 make build
 ```
@@ -18,14 +23,16 @@ Not working?
 Probably your card is not the first one we found and/or your device is not "Digital".
 
 ```
-# Figure out from this what is your card number, and device name:
+# Figure out from this what is your card number:
 ./homekit-alsa list
 
+# Ultimately, dig into what amixer is reporting (from alsa-utils)
+
 # Confirm you got the right card and device by setting the volume manually:
-./homekit-alsa --card 3 --device Something volume 75
+./homekit-alsa set --card 3 --device Something volume 75
 
 # Now register (with the right card and device)
-./homekit-alsa register --card 0 --device Digital --name "Super Speaker" --pin 87654312
+./homekit-alsa register --card 3 --device Something --name "Super Speaker" --pin 87654312
 ```
 
 Fire-up that iPhone. Launch the Home app. Add the accessory.

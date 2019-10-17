@@ -14,7 +14,7 @@ type AmpControl struct {
 	Device string
 }
 
-func (a *AmpControl) GetMute() bool {
+func (a *AmpControl) GetOn() bool {
 	out, err := utils.ExecCmd([]string{"amixer", "-c", strconv.FormatUint(a.Card, 10), "get", a.Device})
 	if err != nil {
 		log.Fatalf("Failed getting volume. Amixer output: %s - error was: %s", out, err)
@@ -26,15 +26,15 @@ func (a *AmpControl) GetMute() bool {
 		return false
 	}
 
-	return muted
+	return !muted
 }
 
-func (a *AmpControl) SetMute(value bool) {
+func (a *AmpControl) SetOn(value bool) {
 	var com string
 	if value {
-		com = "mute"
-	} else {
 		com = "unmute"
+	} else {
+		com = "mute"
 	}
 	out, err := utils.ExecCmd([]string{"amixer", "-c", strconv.FormatUint(a.Card, 10), "set", a.Device, com})
 	if err != nil {

@@ -51,6 +51,8 @@ func getVolume(c *cli.Context) error {
 
 	v := ac.GetVolume()
 	fmt.Printf("Volume: %f\n", v)
+	m := ac.GetOn()
+	fmt.Printf("Is mute: %t\n", !m)
 	return nil
 }
 
@@ -61,26 +63,10 @@ func setVolume(c *cli.Context) error {
 
 	volume := c.Float64("volume")
 	ac.SetVolume(volume)
-	return nil
-}
 
-func getMute(c *cli.Context) error {
-	card := c.Uint64("card")
-	device := c.String("device")
-	ac := ampcontrol.NewAmpControl(card, device)
+	mute := c.Bool("mute")
+	ac.SetOn(!mute)
 
-	v := ac.GetMute()
-	fmt.Printf("Mute: %t\n", v)
-	return nil
-}
-
-func setMute(c *cli.Context) error {
-	card := c.Uint64("card")
-	device := c.String("device")
-	ac := ampcontrol.NewAmpControl(card, device)
-
-	value := c.Bool("true")
-	ac.SetMute(value)
 	return nil
 }
 
@@ -133,78 +119,38 @@ func main() {
 		},
 		{
 			Name:   "get",
-			Usage:  "get the current volume for that card / device",
+			Usage:  "get the volume & mute state",
 			Action: getVolume,
 			Flags: []cli.Flag{
 				cli.UintFlag{
 					Name:  "card, c",
 					Value: cardid,
-					Usage: "card",
 				},
 				cli.StringFlag{
 					Name:  "device, d",
 					Value: "Digital",
-					Usage: "device",
 				},
 			},
 		},
 		{
 			Name:   "set",
-			Usage:  "set the current volume for that card / device",
+			Usage:  "set the volume (and mute state)",
 			Action: setVolume,
 			Flags: []cli.Flag{
 				cli.UintFlag{
 					Name:  "card, c",
 					Value: cardid,
-					Usage: "card",
 				},
 				cli.StringFlag{
 					Name:  "device, d",
 					Value: "Digital",
-					Usage: "device",
 				},
 				cli.Float64Flag{
 					Name:  "volume, v",
-					Value: 0,
-					Usage: "volume",
-				},
-			},
-		},
-		{
-			Name:   "getmute",
-			Usage:  "get mute",
-			Action: getMute,
-			Flags: []cli.Flag{
-				cli.UintFlag{
-					Name:  "card, c",
-					Value: cardid,
-					Usage: "card",
-				},
-				cli.StringFlag{
-					Name:  "device, d",
-					Value: "Digital",
-					Usage: "device",
-				},
-			},
-		},
-		{
-			Name:   "setmute",
-			Usage:  "set mute",
-			Action: setMute,
-			Flags: []cli.Flag{
-				cli.UintFlag{
-					Name:  "card, c",
-					Value: cardid,
-					Usage: "card",
-				},
-				cli.StringFlag{
-					Name:  "device, d",
-					Value: "Digital",
-					Usage: "device",
+					Value: 10,
 				},
 				cli.BoolFlag{
-					Name:  "true",
-					Usage: "mute",
+					Name: "mute",
 				},
 			},
 		},
@@ -216,12 +162,10 @@ func main() {
 				cli.UintFlag{
 					Name:  "card, c",
 					Value: cardid,
-					Usage: "Alsa card",
 				},
 				cli.StringFlag{
 					Name:  "device, d",
 					Value: "Digital",
-					Usage: "Alsa device",
 				},
 				cli.StringFlag{
 					Name:  "pin, p",

@@ -18,14 +18,11 @@ func NewHomeKitAmp(card uint64, device string, info hcacc.Info) *HomeKitAmp {
 		ampcontrol.NewAmpControl(card, device),
 	}
 
-	// XXX for now, do not mute - something is funky and homekit always mute on start
-	// sosy.HomeKit.Amplifier.On.OnValueRemoteUpdate(sosy.Controller.SetMute)
-	sosy.HomeKit.Amplifier.On.OnValueRemoteGet(sosy.Controller.GetMute)
+	sosy.HomeKit.Amplifier.On.OnValueRemoteUpdate(sosy.Controller.SetOn)
+	sosy.HomeKit.Amplifier.On.OnValueRemoteGet(sosy.Controller.GetOn)
 
 	sosy.HomeKit.Amplifier.Volume.OnValueRemoteUpdate(sosy.Controller.SetVolume)
 	sosy.HomeKit.Amplifier.Volume.OnValueRemoteGet(sosy.Controller.GetVolume)
-
-	// sosy.HomeKit.Amplifier.Volume.SetValue(10)
 
 	return &sosy
 }
