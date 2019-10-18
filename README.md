@@ -9,7 +9,7 @@ Lets you control the volume of (alsa) linux sound cards with HomeKit.
 ## TL;DR
 
 ```bash
-# Look Ma! No CaPs! No r00t! No WrIte! No deps! Multi-arch! ~30MB! Like the gRoWN-ups do!
+# Look Ma! No CaPs! No r00t! No WrIte! Healthcheck! Lo' deps! Multi-arch! ~30MB! Like the gRoWN-ups do!
 docker run -d \
     --env HOMEKIT_NAME="My Fancy Speaker" \
     --env HOMEKIT_PIN="87654312" \

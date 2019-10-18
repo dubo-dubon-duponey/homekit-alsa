@@ -75,6 +75,7 @@ func register(c *cli.Context) error {
 	device := c.String("device")
 	pin := c.String("pin")
 	storage := c.String("data-path")
+	port := c.String("port")
 
 	info := accessory.Info{
 		Name:             c.String("name"),
@@ -89,6 +90,7 @@ func register(c *cli.Context) error {
 	t, err := hc.NewIPTransport(hc.Config{
 		Pin:         pin,
 		StoragePath: storage,
+		Port:        port,
 	}, amp.HomeKit.Accessory)
 	if err != nil {
 		return err
@@ -171,6 +173,10 @@ func main() {
 					Name:  "pin, p",
 					Value: "14041976",
 					Usage: "Pin code for your device (8 characters)",
+				},
+				cli.StringFlag{
+					Name:  "port, p",
+					Value: "12345",
 				},
 				cli.StringFlag{
 					Name:  "name",
