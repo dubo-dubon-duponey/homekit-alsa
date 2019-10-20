@@ -170,12 +170,12 @@ func main() {
 					Value: "Digital",
 				},
 				cli.StringFlag{
-					Name:  "pin, p",
+					Name:  "pin",
 					Value: "14041976",
 					Usage: "Pin code for your device (8 characters)",
 				},
 				cli.StringFlag{
-					Name:  "port, p",
+					Name:  "port",
 					Value: "12345",
 				},
 				cli.StringFlag{
