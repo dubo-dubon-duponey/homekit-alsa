@@ -21,6 +21,9 @@ func getFirstCard() (uint, error) {
 		return 0, err
 	}
 	defer alsa.CloseCards(cards)
+	if len(cards) == 0 {
+	  return 0, nil
+  }
 	return uint(cards[0].Number), nil
 }
 
